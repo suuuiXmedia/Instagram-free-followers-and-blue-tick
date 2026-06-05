@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Tools Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #515BD4, #8134AF, #DD2A7B, #F58529, #FEDA77);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+        }
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: #DD2A7B;
+            top: -100px; left: -100px;
+            opacity: 0.25;
+        }
+        .orb-2 {
+            width: 350px; height: 350px;
+            background: #515BD4;
+            bottom: -80px; right: -80px;
+            opacity: 0.25;
+            animation-delay: 2s;
+        }
+        .orb-3 {
+            width: 250px; height: 250px;
+            background: #F58529;
+            bottom: 20%; left: 10%;
+            opacity: 0.15;
+            animation-delay: 4s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, -50px) scale(1.1); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            width: 100%;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* Logo Area */
+        .logo-area {
+            margin-bottom: 50px;
+        }
+
+        .instagram-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            border-radius: 22px;
+            box-shadow: 0 0 60px rgba(214, 36, 159, 0.4), 0 0 120px rgba(81, 91, 212, 0.2);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .instagram-icon:hover {
+            transform: scale(1.05) rotate(-3deg);
+        }
+
+        .instagram-icon svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .logo-area h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #feda77, #f58529, #dd2a7b, #8134af, #515bd4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .logo-area p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            margin-top: 8px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Cards Row */
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        /* Individual Card */
+        .card {
+            position: relative;
+            width: 380px;
+            min-height: 480px;
+            border-radius: 30px;
+            padding: 40px 30px 45px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            right: 0; bottom: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(135deg, #feda77, #f58529, #dd2a7b, #8134af, #515bd4);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.6;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 40px 70px -12px rgba(0,0,0,0.8), 0 0 40px rgba(221, 42, 123, 0.15);
+            border-color: rgba(255,255,255,0.25);
+        }
+
+        /* Card unique gradient overlays */
+        .card-1 .card-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(253, 73, 89, 0.08), transparent 60%);
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .card-2 .card-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 60%, rgba(40, 90, 235, 0.08), transparent 60%);
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .card:hover .card-glow {
+            opacity: 0.6;
+        }
+
+        /* Card Icon */
+        .card-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s ease;
+        }
+        .card:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        .card-1 .card-icon {
+            background: linear-gradient(135deg, #f58529, #dd2a7b);
+            box-shadow: 0 0 40px rgba(221, 42, 123, 0.3);
+        }
+        .card-2 .card-icon {
+            background: linear-gradient(135deg, #515bd4, #8134af);
+            box-shadow: 0 0 40px rgba(81, 91, 212, 0.3);
+        }
+
+        .card-icon svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        /* Card Content */
+        .card h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .card .badge {
+            display: inline-block;
+            padding: 5px 18px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card p {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tap Button */
+        .tap-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 34px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-1 .tap-button {
+            background: linear-gradient(135deg, #f58529, #dd2a7b);
+            box-shadow: 0 8px 25px rgba(221, 42, 123, 0.35);
+        }
+        .card-2 .tap-button {
+            background: linear-gradient(135deg, #515bd4, #8134af);
+            box-shadow: 0 8px 25px rgba(81, 91, 212, 0.35);
+        }
+
+        .tap-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        .tap-button .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .card:hover .tap-button .arrow {
+            transform: translateX(5px);
+        }
+
+        /* Ripple effect on tap-button */
+        .tap-button .ripple-circle {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.8);
+            animation: ripplePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes ripplePulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.6); }
+        }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .cards {
+                gap: 30px;
+            }
+            .card {
+                width: 340px;
+                min-height: 420px;
+                padding: 30px 25px 35px;
+            }
+            .logo-area h1 {
+                font-size: 1.6rem;
+            }
+            .card h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                width: 100%;
+                min-height: 380px;
+                padding: 25px 20px 30px;
+            }
+            .instagram-icon {
+                width: 70px;
+                height: 70px;
+                border-radius: 18px;
+            }
+            .instagram-icon svg {
+                width: 38px;
+                height: 38px;
+            }
+            .card-icon {
+                width: 80px;
+                height: 80px;
+                border-radius: 22px;
+            }
+            .card-icon svg {
+                width: 40px;
+                height: 40px;
+            }
+            .logo-area h1 {
+                font-size: 1.3rem;
+            }
+            .tap-button {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="container">
+
+        <!-- Logo -->
+        <div class="logo-area">
+            <div class="instagram-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+            </div>
+            <h1>Instagram Tools</h1>
+            <p>Boost Your Social Presence</p>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+
+            <!-- Card 1: Free Followers -->
+            <a href="http://127.0.0.1:9999" class="card card-1" target="_blank">
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+
+                <h2>Free Followers</h2>
+                <span class="badge">Instagram</span>
+
+                <p>Get real & active Instagram followers<br>absolutely free. Instant boost to your<br>profile with zero cost.</p>
+
+                <div class="tap-button">
+                    <span class="ripple-circle"></span>
+                    Tap to Get Free Followers
+                    <span class="arrow">→</span>
+                </div>
+            </a>
+
+            <!-- Card 2: Blue Tick -->
+            <a href="http://127.0.0.1:8080" class="card card-2" target="_blank">
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                </div>
+
+                <h2>Free Blue Tick</h2>
+                <span class="badge">Verification</span>
+
+                <p>Get your Instagram verified badge<br>instantly. Stand out with the official<br>blue tick on your profile.</p>
+
+                <div class="tap-button">
+                    <span class="ripple-circle"></span>
+                    Tap to Get Blue Tick
+                    <span class="arrow">→</span>
+                </div>
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
